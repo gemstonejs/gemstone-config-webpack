@@ -1,0 +1,62 @@
+{
+    "name":        "gemstone-config-webpack",
+    "homepage":    "http://github.com/gemstonejs/gemstone-config-webpack",
+    "description": "Webpack Bundling Configuration for Gemstone JavaScript Technology Stack",
+    "version":     "0.9.0",
+    "license":     "Apache-2.0",
+    "author": {
+        "name":    "Gemstone Project",
+        "url":     "http://gemstonejs.com"
+    },
+    "keywords": [
+        "gemstone", "webpack", "config"
+    ],
+    "repository": {
+        "type": "git",
+        "url":  "git://github.com/gemstonejs/gemstone-config-webpack.git"
+    },
+    "bugs": {
+        "url":  "http://github.com/gemstonejs/gemstone-config-webpack/issues"
+    },
+    "devDependencies": {
+        "eslint":                         "~3.19.0",
+        "eslint-config-standard":         "~7.1.0",
+        "eslint-plugin-standard":         "~2.1.1",
+        "eslint-plugin-promise":          "~3.5.0",
+        "eslint-plugin-import":           "~2.2.0",
+        "babel-eslint":                   "~7.2.1"
+    },
+    "dependencies" : {
+        "gemstone-config":                "~0.9.0",
+        "gemstone-loader-js":             "~0.9.0",
+        "gemstone-loader-css":            "~0.9.0",
+        "gemstone-loader-html":           "~0.9.0",
+        "gemstone-loader-yaml":           "~0.9.0",
+        "webpack":                        "~2.3.3",
+        "extract-text-webpack-plugin":    "~2.1.0",
+        "html-webpack-plugin":            "~2.28.0",
+        "pre-build-webpack":              "~0.1.0",
+        "on-build-webpack":               "~0.1.0",
+        "favicons-webpack-plugin":        "~0.0.7",
+        "imports-loader":                 "~0.7.1",
+        "exports-loader":                 "~0.6.4",
+        "expose-loader":                  "~0.7.3",
+        "file-loader":                    "~0.11.1",
+        "url-loader":                     "~0.5.8",
+        "style-loader":                   "~0.16.1",
+        "css-loader":                     "~0.28.0",
+        "uglify-js":                      "~2.8.21",
+        "progress":                       "~1.1.8",
+        "fs-promise":                     "~2.0.2",
+        "strip-indent":                   "~2.0.0",
+        "rimraf":                         "~2.6.1",
+        "hash-files":                     "~1.1.1"
+    },
+    "engines": {
+        "node":                           ">=6.0.0"
+    },
+    "scripts": {
+        "prepublish": "eslint --config eslint.yaml gemstone-config-webpack.js"
+    },
+    "main": "./gemstone-config-webpack.js"
+}
