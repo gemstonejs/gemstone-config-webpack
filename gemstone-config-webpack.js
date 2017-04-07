@@ -19,6 +19,7 @@ const Progress          = require("progress")
 const stripIndent       = require("strip-indent")
 const jsBeautify        = require("js-beautify")
 const hashFiles         = require("hash-files")
+const Moment            = require("moment")
 
 module.exports = function (opts) {
     /*  determine Gemstone configuration  */
@@ -281,12 +282,22 @@ module.exports = function (opts) {
                         /*  JavaScript  */
                         {   test:    /\.js$/,
                             exclude: (path) => {
-                                return (
-                                       path.match(/(?:node_modules|bower_components)/)
-                                    /* && !path.match(/componentjs-mvc/) */
-                                )
+                                return (path.match(/(?:node_modules|bower_components)/))
                             },
                             use: require.resolve("gemstone-loader-js")
+                        },
+                        /*  TypeScript  */
+                        {   test:    /\.tsx?$/,
+                            exclude: (path) => {
+                                return (path.match(/(?:node_modules|bower_components)/))
+                            },
+                            use: {
+                                loader: require.resolve("gemstone-loader-ts"),
+                                options: {
+                                    transpileOnly: true,
+                                    silent: true
+                                }
+                            }
                         },
                         /*  HTML  */
                         {   test:   /\.html$/,
@@ -403,17 +414,22 @@ module.exports = function (opts) {
         algorithm: "md5"
     })
 
+    /*  determine build time  */
+    let time = Moment(new Date()).format("YYYYMMDDhhmmss")
+
     /*  provide environment information  */
     config.plugins.push(new webpack.DefinePlugin({
         "process.env": {
             "NODE_ENV":  `"${opts.env}"`,
             "NODE_TAG":  `"${opts.tag}"`,
-            "NODE_HASH": `"${hash}"`
+            "NODE_HASH": `"${hash}"`,
+            "NODE_TIME": `"${time}"`
         },
         "process.config": {
             "env":      `"${opts.env}"`,
             "tag":      `"${opts.tag}"`,
-            "hash":     `"${hash}"`
+            "hash":     `"${hash}"`,
+            "time":     `"${time}"`
         }
     }))
 
