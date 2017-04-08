@@ -413,9 +413,10 @@ module.exports = function (opts) {
         files: [ `${sourceResolved}/**/*` ],
         algorithm: "md5"
     })
+    hash = hash.replace(/([0-9a-f]{8})(?=.)/g, "$1-"))
 
     /*  determine build time  */
-    let time = Moment(new Date()).format("YYYYMMDDhhmmss")
+    let time = Moment(new Date()).format("YYYY-MM-DD-hh-mm-ss")
 
     /*  provide environment information  */
     config.plugins.push(new webpack.DefinePlugin({
