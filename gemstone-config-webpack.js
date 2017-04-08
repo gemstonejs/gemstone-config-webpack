@@ -338,7 +338,6 @@ module.exports = function (opts) {
         output: {
             path:              path.resolve(cfg.path.output),
             filename:          "[name].js",
-            // sourceMapFilename: "[name].map",
             libraryTarget:     "var",
             library:           "App",
             publicPath:        ""
@@ -433,10 +432,7 @@ module.exports = function (opts) {
     /*  provide environment information  */
     config.plugins.push(new webpack.DefinePlugin({
         "process.env": {
-            "NODE_ENV":  `"${opts.env}"`,
-            "NODE_TAG":  `"${opts.tag}"`,
-            "NODE_HASH": `"${hash}"`,
-            "NODE_TIME": `"${time}"`
+            "NODE_ENV":  `"${opts.env}"`
         },
         "process.config": {
             "env":      `"${opts.env}"`,
@@ -466,14 +462,11 @@ module.exports = function (opts) {
     }
     else {
         /*  provide source-maps for debugging  */
-        // config.devtool = "source-map"
         config.plugins.push(new webpack.SourceMapDevToolPlugin({
             test: /app\.(?:css|js)$/,
             filename: "[file].map"
         }))
     }
-
-    /*  final cleanups  */
 
     return config
 }
