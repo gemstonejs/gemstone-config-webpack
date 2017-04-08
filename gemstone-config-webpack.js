@@ -279,6 +279,18 @@ module.exports = function (opts) {
                         return (path.indexOf(sourceResolved) === 0)
                     },
                     rules: [
+                        /*  pre-loader: Unique Component Identifier (UCID)  */
+                        {   test:    /\.(?:js|tsx?|html|yaml|css|svg)$/,
+                            enforce: "pre",
+                            use:     {
+                                loader: require.resolve("gemstone-loader-ucid"),
+                                options: {
+                                    sourceDir: sourceResolved,
+                                    idMatch:   "__ucid",
+                                    idReplace: "ucid<ucid>"
+                                }
+                            }
+                        },
                         /*  JavaScript  */
                         {   test:    /\.js$/,
                             exclude: (path) => {
@@ -308,7 +320,7 @@ module.exports = function (opts) {
                             use: require.resolve("gemstone-loader-yaml")
                         },
                         /*  CSS/LESS  */
-                        {   test:   /\.(?:less|css)$/,
+                        {   test:   /\.css$/,
                             use: ExtractTextPlugin.extract({
                                 fallback: require.resolve("style-loader"),
                                 use: require.resolve("gemstone-loader-css")
