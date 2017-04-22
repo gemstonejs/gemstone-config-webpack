@@ -30,8 +30,8 @@ module.exports = function (opts) {
 
     /*  instanciate progress bar  */
     let progressCur = 0.0
-    let progressBar = new Progress(`   compiling: [:bar] ${chalk.bold(":percent")} (elapsed: :elapseds) :msg `, {
-        complete:   chalk.bold.green("#"),
+    let progressBar = new Progress(`   compiling: [${chalk.green(":bar")}] ${chalk.bold(":percent")} (elapsed: :elapseds) :msg `, {
+        complete:   "#",
         incomplete: "=",
         width:      20,
         total:      1.0,
