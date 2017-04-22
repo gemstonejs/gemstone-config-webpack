@@ -28,7 +28,7 @@
         "babel-eslint":                   "~7.2.3"
     },
     "dependencies" : {
-        "gemstone-config":                "~0.9.5",
+        "gemstone-config":                "~0.9.6",
         "gemstone-loader-ucid":           "~0.9.1",
         "gemstone-loader-js":             "~0.9.2",
         "gemstone-loader-ts":             "~0.9.1",

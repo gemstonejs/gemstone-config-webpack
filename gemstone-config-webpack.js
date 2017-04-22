@@ -38,20 +38,11 @@ module.exports = function (opts) {
         stream:     process.stderr
     })
 
-    /*  determine copyright message  */
-    let copyright = cfg.header
-    copyright = copyright
-        .replace(/[ \t]+$/mg, "")                        /*  remove trailing blanks to simplify multi-line matching  */
-        .replace(/^(?:\r?\n)+/, "").replace(/^/, "\n")   /*  ensure a single preceeding blank line  */
-        .replace(/(?:\r?\n)+$/, "").replace(/$/, "\n\n") /*  ensure a single following blank line  */
-        .replace(/^/mg, "    ").replace(/\n *$/, "\n")   /*  prefix all lines the comment block  */
-        .replace(/[ \t]+$/mg, "")                        /*  remove (potentially generated) trailing blanks  */
-
     /*  generate HTML index page skeleton  */
     let index = stripIndent(`
         <!DOCTYPE html>
         <!--
-        %copyright%
+        %header%
         -->
         <html>
             <head>
@@ -70,7 +61,7 @@ module.exports = function (opts) {
             <body>
             </body>
         </html>
-    `  ).replace(/%copyright%\n/, copyright)
+    `  ).replace(/%header%\n/, cfg.header)
         .replace(/^\n+/, "")
         .replace(/([ \t]*\n)+[ \t]*$/, "\n")
 
