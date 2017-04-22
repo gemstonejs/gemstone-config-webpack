@@ -74,8 +74,6 @@ module.exports = function (opts) {
         .replace(/^\n+/, "")
         .replace(/([ \t]*\n)+[ \t]*$/, "\n")
 
-    /*  FIXME: <script type="text/javascript">App.default.main()</script>  */
-
     /*  determine resolved path to source files  */
     let sourceResolved = path.resolve(cfg.path.source)
 
