@@ -212,7 +212,8 @@ module.exports = function (opts) {
                         return path.match(/\/(?:node_modules|bower_components)\//)
                     },
                     rules: [
-                        {   test: /\.js/,
+                        /*  JavaScript  */
+                        {   test: /\.js$/,
                             rules: [
                                 {
                                     parser: {
@@ -221,6 +222,13 @@ module.exports = function (opts) {
                                     }
                                 }
                             ]
+                        },
+                        /*  post-loader: remove strictness indicators  */
+                        {   test: /\.js$/,
+                            enforce: "post",
+                            use: {
+                                loader: require.resolve("gemstone-loader-nostrict")
+                            }
                         },
                         /*  CSS/LESS  */
                         {   test: /\.css$/,
