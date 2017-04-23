@@ -57,7 +57,7 @@
         "hash-files":                     "~1.1.1"
     },
     "engines": {
-        "node":                           ">=6.0.0"
+        "node":                           ">=7.6.0"
     },
     "scripts": {
         "prepublish": "eslint --config eslint.yaml gemstone-config-webpack.js"
