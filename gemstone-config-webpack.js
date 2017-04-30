@@ -424,7 +424,7 @@ module.exports = function (opts) {
     hash = hash.replace(/([0-9a-f]{8})(?=.)/g, "$1-")
 
     /*  determine build time  */
-    let time = Moment(new Date()).format("YYYY-MM-DD-hh-mm-ss")
+    let time = Moment(new Date()).format("YYYY.MMDD.hhmm.ssSS")
 
     /*  provide environment information  */
     config.plugins.push(new webpack.DefinePlugin({
