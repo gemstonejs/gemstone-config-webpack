@@ -416,7 +416,7 @@ module.exports = function (opts) {
         config.plugins.push(new webpack.NormalModuleReplacementPlugin(from, to))
     })
 
-    /*  determine build hash  */
+    /*  determine build hash ("HHHH.HHHH.HHHH.HHHH")  */
     let hash = hashFiles.sync({
         files: [ `${sourceResolved}/**/*` ],
         algorithm: "md5"
@@ -425,7 +425,7 @@ module.exports = function (opts) {
         .split("").filter((x, i) => i % 2 === 0).join("")
         .replace(/([0-9A-F]{4})(?=.)/g, "$1.")
 
-    /*  determine build time  */
+    /*  determine build time ("YYYY.MMDD.hhmm.ssSS")  */
     let time = Moment(new Date()).format("YYYY.MMDD.hhmm.ssSS")
 
     /*  provide environment information  */
