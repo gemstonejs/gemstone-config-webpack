@@ -421,7 +421,9 @@ module.exports = function (opts) {
         files: [ `${sourceResolved}/**/*` ],
         algorithm: "md5"
     })
-    hash = hash.replace(/([0-9a-f]{8})(?=.)/g, "$1-")
+    hash = hash.toUpperCase()
+        .split("").filter((x, i) => i % 2 === 0).join("")
+        .replace(/([0-9A-F]{4})(?=.)/g, "$1.")
 
     /*  determine build time  */
     let time = Moment(new Date()).format("YYYY.MMDD.hhmm.ssSS")
