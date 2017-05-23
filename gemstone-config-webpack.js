@@ -5,7 +5,7 @@
 */
 
 const path              = require("path")
-const fs                = require("fs-promise")
+const fs                = require("mz/fs")
 const rimraf            = require("rimraf")
 const gemstoneConfig    = require("gemstone-config")
 const webpack           = require("webpack")
