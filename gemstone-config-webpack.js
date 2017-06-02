@@ -47,6 +47,7 @@ module.exports = function (opts) {
         <html>
             <head>
                 <meta http-equiv="content-type" content="text/html; charset=utf-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=1, user-scalable=no">
                 <meta name="mobile-web-app-capable" content="yes">
                 <meta name="apple-mobile-web-app-capable" content="yes">
