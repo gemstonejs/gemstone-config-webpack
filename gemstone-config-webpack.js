@@ -84,6 +84,7 @@ module.exports = function (opts) {
     })()
 
     /*  start assembling Webpack configuration object  */
+    let pathSepRe = path.sep.replace(/\\/, "\\\\")
     let config = {
         plugins: [
             new webpack.NoEmitOnErrorsPlugin(),
@@ -205,12 +206,12 @@ module.exports = function (opts) {
             "websocket":    "WebSocket"
         }],
         module: {
-            noParse: /\/gemstone-framework-frontend\//,
+            noParse: new RegExp(`${pathSepRe}gemstone-framework-frontend${pathSepRe}`),
             rules: [
                 /*  ==== LIB ====  */
                 {
                     test: (path) => {
-                        return path.match(/\/(?:node_modules|bower_components)\//)
+                        return path.match(new RegExp(`${pathSepRe}(?:node_modules|bower_components)${pathSepRe}`))
                     },
                     rules: [
                         /*  JavaScript  */
