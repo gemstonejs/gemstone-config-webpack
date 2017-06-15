@@ -14,6 +14,8 @@ const HTMLWebpackPlugin = require("html-webpack-plugin")
 const PreBuildPlugin    = require("pre-build-webpack")
 const OnBuildPlugin     = require("on-build-webpack")
 const FaviconsPlugin    = require("favicons-webpack-plugin")
+const CompressionPlugin = require("compression-webpack-plugin")
+const BrotliPlugin      = require("brotli-webpack-plugin")
 const Chalk             = require("chalk")
 const Progress          = require("progress")
 const stripIndent       = require("strip-indent")
@@ -445,7 +447,7 @@ module.exports = function (opts) {
 
     /*  final environment-specific treatments  */
     if (opts.env === "production") {
-        /*  compress JS files  */
+        /*  minimize JS files  */
         config.plugins.push(new webpack.optimize.UglifyJsPlugin({
             sourceMap: false,
             beautify:  false,
@@ -456,9 +458,25 @@ module.exports = function (opts) {
             }
         }))
 
-        /*  compress any other files (except for JS files)  */
+        /*  minimize any other files (in general)  */
         config.plugins.push(new webpack.LoaderOptionsPlugin({
             minimize: true
+        }))
+
+        /*  compress JS/CSS/HTML files  */
+        config.plugins.push(new CompressionPlugin({
+            asset:      "[path].gz[query]",
+            algorithm:  "gzip",
+            test:       /\.(?:js|css|html)$/,
+            threshold:  10 * 1024,
+            minRatio:   0.8,
+            deleteOriginalAssets: false
+        }))
+        config.plugins.push(new BrotliPlugin({
+            asset:      "[path].br[query]",
+            test:       /\.(?:js|css|html)$/,
+            threshold:  10 * 1024,
+            minRatio:   0.8
         }))
     }
     else {

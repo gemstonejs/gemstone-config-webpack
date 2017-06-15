@@ -30,7 +30,7 @@
     "dependencies" : {
         "gemstone-config":                "~0.9.14",
         "gemstone-loader-ucid":           "~0.9.4",
-        "gemstone-loader-js":             "~0.9.6",
+        "gemstone-loader-js":             "~0.9.7",
         "gemstone-loader-ts":             "~0.9.6",
         "gemstone-loader-css":            "~0.9.12",
         "gemstone-loader-html":           "~0.9.13",
@@ -42,6 +42,8 @@
         "pre-build-webpack":              "~0.1.0",
         "on-build-webpack":               "~0.1.0",
         "favicons-webpack-plugin":        "~0.0.7",
+        "compression-webpack-plugin":     "~0.4.0",
+        "brotli-webpack-plugin":          "~0.3.0",
         "imports-loader":                 "~0.7.1",
         "exports-loader":                 "~0.6.4",
         "expose-loader":                  "~0.7.3",
