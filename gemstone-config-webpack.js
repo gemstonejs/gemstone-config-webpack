@@ -9,6 +9,7 @@ const fs                = require("mz/fs")
 const rimraf            = require("rimraf")
 const gemstoneConfig    = require("gemstone-config")
 const webpack           = require("webpack")
+const BundleAnalyzer    = require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const PreBuildPlugin    = require("pre-build-webpack")
@@ -480,6 +481,16 @@ module.exports = function (opts) {
         }))
     }
     else {
+        /*  provide bundle analyzer information  */
+        config.plugins.push(new BundleAnalyzer({
+            analyzerMode:      "static",
+            reportFilename:    "index-report.html",
+            defaultSizes:      "parsed",
+            openAnalyzer:      false,
+            generateStatsFile: false,
+            logLevel:          "error"
+        }))
+
         /*  provide source-maps for debugging  */
         config.plugins.push(new webpack.SourceMapDevToolPlugin({
             test: /app\.(?:css|js)$/,
