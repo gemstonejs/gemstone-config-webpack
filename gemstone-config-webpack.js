@@ -71,6 +71,7 @@ module.exports = function (opts) {
 
     /*  determine resolved path to source files  */
     let sourceResolved = path.resolve(cfg.path.source)
+    let resourceResolved = path.resolve(cfg.path.resource)
 
     /*  the SVG image/font checking cache  */
     const svgIsFont = (() => {
@@ -215,6 +216,7 @@ module.exports = function (opts) {
                 {
                     test: (path) => {
                         return path.match(new RegExp(`${pathSepRe}(?:node_modules|bower_components)${pathSepRe}`))
+                            || (path.indexOf(resourceResolved) === 0)
                     },
                     rules: [
                         /*  JavaScript  */
