@@ -179,7 +179,8 @@ module.exports = function (opts) {
                     })
                     await fs.writeFile(filename, html, "utf8")
                 }
-            })
+            }),
+            new webpack.optimize.ModuleConcatenationPlugin()
         ],
         context: process.cwd(),
         entry: {
