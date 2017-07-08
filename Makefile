@@ -12,7 +12,7 @@ bootstrap:
 	@if [ ! -d node_modules ]; then $(NPM) install; fi
 
 build: bootstrap
-	@$(NPM) run prepublish
+	@$(NPM) run prepublishOnly
 
 clean: bootstrap
 

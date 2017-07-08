@@ -64,7 +64,7 @@
         "node":                           ">=7.6.0"
     },
     "scripts": {
-        "prepublish": "eslint --config eslint.yaml gemstone-config-webpack.js"
+        "prepublishOnly": "eslint --config eslint.yaml gemstone-config-webpack.js"
     },
     "main": "./gemstone-config-webpack.js"
 }
