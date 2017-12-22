@@ -2,7 +2,7 @@
     "name":        "gemstone-config-webpack",
     "homepage":    "http://github.com/gemstonejs/gemstone-config-webpack",
     "description": "Webpack Bundling Configuration for Gemstone JavaScript Technology Stack",
-    "version":     "0.9.38",
+    "version":     "0.9.39",
     "license":     "Apache-2.0",
     "author": {
         "name":    "Gemstone Project",
