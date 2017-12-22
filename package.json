@@ -33,7 +33,7 @@
         "gemstone-loader-js":             "~0.9.14",
         "gemstone-loader-ts":             "~0.9.14",
         "gemstone-loader-css":            "~0.9.23",
-        "gemstone-loader-html":           "~0.9.21",
+        "gemstone-loader-html":           "~0.9.23",
         "gemstone-loader-yaml":           "~0.9.14",
         "gemstone-loader-nostrict":       "~0.9.11",
         "webpack":                        "~3.10.0",
