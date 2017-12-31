@@ -521,6 +521,11 @@ module.exports = function (opts) {
         }))
     }
     else {
+        /*  do NOT minimize any files  */
+        config.plugins.push(new webpack.LoaderOptionsPlugin({
+            minimize: false
+        }))
+
         /*  provide bundle analyzer information  */
         config.plugins.push(new BundleAnalyzer({
             analyzerMode:      "static",
