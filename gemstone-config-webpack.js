@@ -29,7 +29,7 @@ module.exports = function (opts) {
     let cfg = gemstoneConfig()
 
     /*  get a chalk instance  */
-    const chalk = new Chalk.constructor({ enabled: process.stderr.isTTY })
+    const chalk = new Chalk.constructor({ enabled: true })
 
     /*  instanciate progress bar  */
     let progressCur = 0.0
