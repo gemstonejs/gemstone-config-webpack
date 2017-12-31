@@ -285,9 +285,9 @@ module.exports = function (opts) {
                     },
                     rules: [
                         /*  pre-loader: Unique Component Identifier (UCID)  */
-                        {   test:    /\.(?:js|tsx?|html|yaml|css|svg)$/,
+                        {   test: /\.(?:js|tsx?|html|yaml|css|svg)$/,
                             enforce: "pre",
-                            use:     {
+                            use: {
                                 loader: require.resolve("gemstone-loader-ucid"),
                                 options: {
                                     sourceDir: sourceResolved,
@@ -297,14 +297,14 @@ module.exports = function (opts) {
                             }
                         },
                         /*  JavaScript  */
-                        {   test:    /\.js$/,
+                        {   test: /\.js$/,
                             exclude: (path) => {
                                 return (path.match(/(?:node_modules|bower_components)/))
                             },
                             use: require.resolve("gemstone-loader-js")
                         },
                         /*  TypeScript  */
-                        {   test:    /\.tsx?$/,
+                        {   test: /\.tsx?$/,
                             exclude: (path) => {
                                 return (path.match(/(?:node_modules|bower_components)/))
                             },
@@ -317,23 +317,53 @@ module.exports = function (opts) {
                             }
                         },
                         /*  HTML  */
-                        {   test:   /\.html$/,
+                        {   test: /\.html$/,
                             use: require.resolve("gemstone-loader-html")
                         },
                         /*  YAML  */
-                        {   test:   /\.yaml$/,
+                        {   test: /\.yaml$/,
                             use: require.resolve("gemstone-loader-yaml")
                         },
                         /*  CSS/LESS  */
-                        {   test:   /\.css$/,
+                        {   test: /\.css$/,
                             use: ExtractTextPlugin.extract({
                                 fallback: require.resolve("style-loader"),
                                 use: require.resolve("gemstone-loader-css")
                             })
                         },
                         /*  JPEG/PNG/SVG images  */
-                        {   test:   /\.(?:jpg|png|svg)$/,
-                            use: require.resolve("url-loader")
+                        {   test: /\.(?:jpg|png|gif)$/,
+                            use: {
+                                loader: require.resolve("file-loader"),
+                                options: "name=app-img-[md5:hash:base62:32].[ext]"
+                            }
+                        },
+                        /*  SVG images/fonts  */
+                        {   test: /\.svg$/,
+                            rules: [ {
+                                test: (path) => !svgIsFont(path),
+                                use: {
+                                    loader: require.resolve("file-loader"),
+                                    options: "name=app-img-[md5:hash:base62:32].[ext]"
+                                }
+                            }, {
+                                test: (path) => svgIsFont(path),
+                                use: {
+                                    loader: require.resolve("file-loader"),
+                                    options: "name=app-font-[md5:hash:base62:32].[ext]"
+                                }
+                            } ]
+                        },
+                        /*  EOT/WOFF/TTF fonts  */
+                        {   test: /\.(?:eot|woff2?|ttf)$/,
+                            use: {
+                                loader: require.resolve("file-loader"),
+                                options: "name=app-font-[md5:hash:base62:32].[ext]"
+                            }
+                        },
+                        /*  TXT/BIN files  */
+                        {   test: /\.(?:txt|bin)$/,
+                            use: require.resolve("raw-loader")
                         }
                     ]
                 }
