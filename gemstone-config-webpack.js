@@ -274,6 +274,10 @@ module.exports = function (opts) {
                                 loader: require.resolve("file-loader"),
                                 options: "name=lib-font-[md5:hash:base62:32].[ext]"
                             }
+                        },
+                        /*  TXT/BIN files  */
+                        {   test: /\.(?:txt|bin)$/,
+                            use: require.resolve("raw-loader")
                         }
                     ]
                 },
