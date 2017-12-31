@@ -331,14 +331,16 @@ module.exports = function (opts) {
                                 use: require.resolve("gemstone-loader-css")
                             })
                         },
-                        /*  JPEG/PNG/SVG images  */
+                        /*  JPEG/PNG/SVG images
+                            (should not be used due to inline-assets in gemstone-loader-{css,html}  */
                         {   test: /\.(?:jpg|png|gif)$/,
                             use: {
                                 loader: require.resolve("file-loader"),
                                 options: "name=app-img-[md5:hash:base62:32].[ext]"
                             }
                         },
-                        /*  SVG images/fonts  */
+                        /*  SVG images/fonts
+                            (should not be used due to inline-assets in gemstone-loader-{css,html}  */
                         {   test: /\.svg$/,
                             rules: [ {
                                 test: (path) => !svgIsFont(path),
@@ -354,7 +356,8 @@ module.exports = function (opts) {
                                 }
                             } ]
                         },
-                        /*  EOT/WOFF/TTF fonts  */
+                        /*  EOT/WOFF/TTF fonts
+                            (should not be used due to inline-assets in gemstone-loader-{css,html}  */
                         {   test: /\.(?:eot|woff2?|ttf)$/,
                             use: {
                                 loader: require.resolve("file-loader"),
