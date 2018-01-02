@@ -201,7 +201,12 @@ module.exports = function (opts) {
                 "main"
             ],
             alias: {
-                "gemstone$": "gemstone-framework-frontend"
+                "gemstone$":        "gemstone-framework-frontend",
+                "jquery$":          "gemstone-framework-frontend/lib/jquery",
+                "vue$":             "gemstone-framework-frontend/lib/vue",
+                "componentjs$":     "gemstone-framework-frontend/lib/componentjs",
+                "componentjs-mvc$": "gemstone-framework-frontend/lib/componentjs-mvc",
+                "i18next$":         "gemstone-framework-frontend/lib/i18next"
             }
         },
         externals: [{
