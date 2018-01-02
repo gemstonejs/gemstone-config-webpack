@@ -204,9 +204,7 @@ module.exports = function (opts) {
                 "gemstone$":        "gemstone-framework-frontend",
                 "jquery$":          "gemstone-framework-frontend/lib/jquery",
                 "vue$":             "gemstone-framework-frontend/lib/vue",
-                "componentjs$":     "gemstone-framework-frontend/lib/componentjs",
-                "componentjs-mvc$": "gemstone-framework-frontend/lib/componentjs-mvc",
-                "i18next$":         "gemstone-framework-frontend/lib/i18next"
+                "componentjs$":     "gemstone-framework-frontend/lib/componentjs"
             }
         },
         externals: [{
@@ -445,7 +443,11 @@ module.exports = function (opts) {
     })
 
     /*  provide Webpack module provides  */
-    let provides = {}
+    let provides = {
+        "jQuery":      "jquery",
+        "Vue":         "vue",
+        "ComponentJS": "componentjs"
+    }
     cfg.modules.provide.forEach((provide) => {
         provides[provide.name] = provide.require
     })
