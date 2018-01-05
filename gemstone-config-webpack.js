@@ -70,7 +70,7 @@ module.exports = function (opts) {
         .replace(/([ \t]*\n)+[ \t]*$/, "\n")
 
     /*  determine resolved path to source files  */
-    let sourceResolved = path.resolve(cfg.path.source)
+    let sourceResolved   = path.resolve(cfg.path.source)
     let resourceResolved = path.resolve(cfg.path.resource)
 
     /*  the SVG image/font checking cache  */
@@ -114,7 +114,7 @@ module.exports = function (opts) {
                 cache:          true
             }),
             new FaviconsPlugin({
-                logo:             cfg.path.icon,
+                logo:             (cfg.path.icon !== "" ? cfg.path.icon : path.resolve(__dirname, "gemstone-icon.png")),
                 prefix:           "index-",
                 emitStats:        false,
                 persistentCache:  opts.env === "development",
@@ -214,7 +214,7 @@ module.exports = function (opts) {
             "websocket":    "WebSocket"
         }],
         module: {
-            noParse: new RegExp(`${pathSepRe}gemstone-framework-frontend${pathSepRe}`),
+            noParse: new RegExp(`${pathSepRe}gemstone-framework-frontend${pathSepRe}$`),
             rules: [
                 /*  ==== LIB ====  */
                 {
