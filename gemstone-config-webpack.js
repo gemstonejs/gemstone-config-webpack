@@ -114,7 +114,7 @@ module.exports = function (opts) {
                 cache:          true
             }),
             new FaviconsPlugin({
-                logo:             (cfg.path.icon !== "" ? cfg.path.icon : path.resolve(__dirname, "gemstone-icon.png")),
+                logo:             (cfg.path.icon !== "" ? cfg.path.icon : path.resolve(path.join(__dirname, "gemstone-icon.png"))),
                 prefix:           "index-",
                 emitStats:        false,
                 persistentCache:  opts.env === "development",
