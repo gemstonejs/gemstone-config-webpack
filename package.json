@@ -28,7 +28,7 @@
         "babel-eslint":                   "~8.1.2"
     },
     "dependencies" : {
-        "gemstone-config":                "~0.9.26",
+        "gemstone-config":                "~0.9.28",
         "gemstone-loader-ucid":           "~0.9.13",
         "gemstone-loader-js":             "~0.9.16",
         "gemstone-loader-ts":             "~0.9.16",
@@ -52,7 +52,7 @@
         "raw-loader":                     "~0.5.1",
         "url-loader":                     "~0.6.2",
         "style-loader":                   "~0.19.1",
-        "css-loader":                     "~0.28.7",
+        "css-loader":                     "~0.28.8",
         "uglify-js":                      "~3.3.4",
         "js-beautify":                    "~1.7.5",
         "progress":                       "~2.0.0",
