@@ -201,7 +201,7 @@ module.exports = function (opts) {
                 "main"
             ],
             alias: {
-                "gemstone$":        `gemstone-framework-frontend/dst/gemstone${opt.env === "production" ? "" : ".dev"}.js`,
+                "gemstone$":        `gemstone-framework-frontend/dst/gemstone${opts.env === "production" ? "" : ".dev"}.js`,
                 "gemstone.css$":    "gemstone-framework-frontend/dst/gemstone.css",
                 "jquery$":          "gemstone-framework-frontend/lib/jquery",
                 "vue$":             "gemstone-framework-frontend/lib/vue",
