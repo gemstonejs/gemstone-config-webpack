@@ -201,11 +201,11 @@ module.exports = function (opts) {
                 "main"
             ],
             alias: {
-                "gemstone$":        `gemstone-framework-frontend/dst/gemstone${opts.env === "production" ? "" : ".dev"}.js`,
                 "gemstone.css$":    "gemstone-framework-frontend/dst/gemstone.css",
-                "jquery$":          "gemstone-framework-frontend/lib/jquery",
-                "vue$":             "gemstone-framework-frontend/lib/vue",
-                "componentjs$":     "gemstone-framework-frontend/lib/componentjs"
+                "gemstone$":        `gemstone-framework-frontend/dst/gemstone${opts.env === "production" ? "" : ".dev"}.js`,
+                "jquery$":          `gemstone-framework-frontend/lib/jquery${opts.env === "production" ? "" : ".dev"}.js`,
+                "vue$":             `gemstone-framework-frontend/lib/vue${opts.env === "production" ? "" : ".dev"}.js`,
+                "componentjs$":     `gemstone-framework-frontend/lib/componentjs${opts.env === "production" ? "" : ".dev"}.js`
             }
         },
         externals: [{
