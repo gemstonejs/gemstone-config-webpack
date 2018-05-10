@@ -12,11 +12,10 @@ const webpack           = require("webpack")
 const BundleAnalyzer    = require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const HTMLWebpackPlugin = require("html-webpack-plugin")
-const PreBuildPlugin    = require("pre-build-webpack")
-const OnBuildPlugin     = require("on-build-webpack")
 const FaviconsPlugin    = require("favicons-webpack-plugin")
 const CompressionPlugin = require("compression-webpack-plugin")
 const BrotliPlugin      = require("brotli-webpack-plugin")
+const UglifyPlugin      = require("uglifyjs-webpack-plugin")
 const Chalk             = require("chalk")
 const Progress          = require("progress")
 const stripIndent       = require("strip-indent")
@@ -90,20 +89,12 @@ module.exports = function (opts) {
     /*  start assembling Webpack configuration object  */
     let pathSepRe = path.sep.replace(/\\/, "\\\\")
     let config = {
+        mode: (opts.env === "production" ? "production" : "development"),
         plugins: [
             new webpack.NoEmitOnErrorsPlugin(),
             new ExtractTextPlugin({
                 filename:  "[name].css",
                 allChunks: true
-            }),
-            new webpack.optimize.CommonsChunkPlugin({
-                name: "lib",
-                minChunks: function (module) {
-                    return (
-                        module.context && (module.context.match(/(?:node_modules|bower_components)/)
-                        || module.context.match(/gemstone-framework-frontend/))
-                    )
-                }
             }),
             new HTMLWebpackPlugin({
                 templateContent: index,
@@ -147,40 +138,7 @@ module.exports = function (opts) {
                 if (progressBar.complete)
                     process.stderr.write("\n")
                 progressCur += delta
-            }),
-            new PreBuildPlugin(async (/* stats */) => {
-                if (opts.env === "production") {
-                    /*  remove destination directory (recursively)  */
-                    if (await fs.exists(cfg.path.output)) {
-                        await new Promise((resolve, reject) => {
-                            rimraf(cfg.path.output, {}, (err) => {
-                                if (err) reject(err)
-                                else     resolve()
-                            })
-                        })
-                    }
-                }
-            }),
-            new OnBuildPlugin(async (/* stats */) => {
-                /*  remove unwanted generated file  */
-                let manifest = path.join(cfg.path.output, "index-manifest.json")
-                if (await fs.exists(manifest))
-                    await fs.unlink(manifest)
-
-                /*  reformat index.html file  */
-                let filename = path.join(cfg.path.output, "index.html")
-                if (await fs.exists(filename)) {
-                    let html = await fs.readFile(filename, "utf8")
-                    html = jsBeautify.html(html, {
-                        indent_size: 4,
-                        indent_char: " ",
-                        indent_inner_html: true,
-                        extra_liners: []
-                    })
-                    await fs.writeFile(filename, html, "utf8")
-                }
-            }),
-            new webpack.optimize.ModuleConcatenationPlugin()
+            })
         ],
         context: process.cwd(),
         entry: {
@@ -420,6 +378,68 @@ module.exports = function (opts) {
             publicPath:      false,
             reasons:         false,
             source:          false
+        },
+        performance: {
+            hints:           false
+        }
+    }
+
+    /*  pre-process operation  */
+    config.plugins.push({
+        apply (compiler) {
+            compiler.hooks.beforeRun.tapPromise("Gemstone", async () => {
+                /*  remove destination directory (recursively) for production builds  */
+                if (opts.env === "production") {
+                    if (await fs.exists(cfg.path.output)) {
+                        await new Promise((resolve, reject) => {
+                            rimraf(cfg.path.output, {}, (err) => {
+                                if (err) reject(err)
+                                else     resolve()
+                            })
+                        })
+                    }
+                }
+            })
+        }
+    })
+
+    /*  post-process operation  */
+    config.plugins.push({
+        apply (compiler) {
+            compiler.hooks.afterEmit.tapPromise("Gemstone", async () => {
+                /*  remove unwanted generated file  */
+                let manifest = path.join(cfg.path.output, "index-manifest.json")
+                if (await fs.exists(manifest))
+                    await fs.unlink(manifest)
+
+                /*  reformat index.html file  */
+                let filename = path.join(cfg.path.output, "index.html")
+                if (await fs.exists(filename)) {
+                    let html = await fs.readFile(filename, "utf8")
+                    html = jsBeautify.html(html, {
+                        indent_size: 4,
+                        indent_char: " ",
+                        indent_inner_html: true,
+                        extra_liners: []
+                    })
+                    await fs.writeFile(filename, html, "utf8")
+                }
+            })
+        }
+    })
+
+    /*  provide library chunk splitting  */
+    config.optimization = {
+        splitChunks: {
+            chunks: "all",
+            name:   false,
+            cacheGroups: {
+                commons: {
+                    test:   /[\\/](?:node_modules|bower_components|gemstone-framework-frontend)[\\/]/,
+                    name:   "lib",
+                    chunks: "all"
+                }
+            }
         }
     }
 
@@ -497,15 +517,23 @@ module.exports = function (opts) {
     /*  final environment-specific treatments  */
     if (opts.env === "production") {
         /*  minimize JS files  */
-        config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-            sourceMap: false,
-            beautify:  false,
-            comments:  false,
-            mangle:    false,
-            compress: {
-                warnings: false
-            }
-        }))
+        config.optimization.minimize = true
+        config.optimization.minimizer = [
+            new UglifyPlugin({
+                parallel:  true,
+                cache:     false,
+                sourceMap: false,
+                uglifyOptions: {
+                    beautify:  false,
+                    comments:  false,
+                    mangle:    false,
+                    ecma:      6,
+                    compress: {
+                        warnings: false
+                    }
+                }
+            })
+        ]
 
         /*  minimize any other files (in general)  */
         config.plugins.push(new webpack.LoaderOptionsPlugin({
