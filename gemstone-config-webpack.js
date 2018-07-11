@@ -524,12 +524,18 @@ module.exports = function (opts) {
                 cache:     false,
                 sourceMap: false,
                 uglifyOptions: {
-                    beautify:  false,
-                    comments:  false,
-                    mangle:    false,
-                    ecma:      6,
+                    beautify:     false,
+                    comments:     false,
+                    mangle:       false,
+                    parse: {
+                        ecma:     8
+                    },
                     compress: {
-                        warnings: false
+                        warnings: false,
+                        ecma:     5
+                    },
+                    output: {
+                        ecma:     5
                     }
                 }
             })
