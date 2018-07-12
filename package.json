@@ -25,14 +25,14 @@
         "eslint-plugin-promise":          "3.8.0",
         "eslint-plugin-import":           "2.13.0",
         "eslint-plugin-node":             "6.0.1",
-        "babel-eslint":                   "8.2.5"
+        "babel-eslint":                   "8.2.6"
     },
     "dependencies" : {
         "gemstone-config":                "0.9.39",
         "gemstone-loader-ucid":           "0.9.22",
         "gemstone-loader-js":             "0.9.27",
         "gemstone-loader-ts":             "0.9.26",
-        "gemstone-loader-css":            "0.9.40",
+        "gemstone-loader-css":            "0.9.41",
         "gemstone-loader-html":           "0.9.42",
         "gemstone-loader-yaml":           "0.9.26",
         "gemstone-loader-nostrict":       "0.9.22",
