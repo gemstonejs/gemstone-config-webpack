@@ -35,4 +35,7 @@ rules:
     object-property-newline:             off
     curly:                               off
     space-in-parens:                     off
+    object-curly-newline:                off
+    array-bracket-spacing:               off
+    quote-props:                         off
 

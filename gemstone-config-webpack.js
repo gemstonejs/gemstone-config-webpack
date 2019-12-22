@@ -25,14 +25,14 @@ const Moment            = require("moment")
 
 module.exports = function (opts) {
     /*  determine Gemstone configuration  */
-    let cfg = gemstoneConfig()
+    const cfg = gemstoneConfig()
 
     /*  get a chalk instance  */
     const chalk = new Chalk.constructor({ enabled: true })
 
     /*  instanciate progress bar  */
     let progressCur = 0.0
-    let progressBar = new Progress(`   compiling: [${chalk.green(":bar")}] ${chalk.bold(":percent")} (elapsed: :elapseds) :msg `, {
+    const progressBar = new Progress(`   compiling: [${chalk.green(":bar")}] ${chalk.bold(":percent")} (elapsed: :elapseds) :msg `, {
         complete:   "#",
         incomplete: "=",
         width:      20,
@@ -41,7 +41,7 @@ module.exports = function (opts) {
     })
 
     /*  generate HTML index page skeleton  */
-    let index = stripIndent(`
+    const index = stripIndent(`
         <!DOCTYPE html>
         <!--
         %header%
@@ -69,16 +69,16 @@ module.exports = function (opts) {
         .replace(/([ \t]*\n)+[ \t]*$/, "\n")
 
     /*  determine resolved path to source files  */
-    let sourceResolved   = path.resolve(cfg.path.source)
-    let resourceResolved = path.resolve(cfg.path.resource)
+    const sourceResolved   = path.resolve(cfg.path.source)
+    const resourceResolved = path.resolve(cfg.path.resource)
 
     /*  the SVG image/font checking cache  */
     const svgIsFont = (() => {
-        let isFontCache = {}
+        const isFontCache = {}
         return (path) => {
             let isFont = isFontCache[path]
             if (isFont === undefined) {
-                let svg = fs.readFileSync(path, "utf8")
+                const svg = fs.readFileSync(path, "utf8")
                 isFont = (svg.match(/<font[^>]*>(.|\r?\n)*<\/font>/) !== null)
                 isFontCache[path] = true
             }
@@ -87,8 +87,8 @@ module.exports = function (opts) {
     })()
 
     /*  start assembling Webpack configuration object  */
-    let pathSepRe = path.sep.replace(/\\/, "\\\\")
-    let config = {
+    const pathSepRe = path.sep.replace(/\\/, "\\\\")
+    const config = {
         mode: (opts.env === "production" ? "production" : "development"),
         plugins: [
             new webpack.NoEmitOnErrorsPlugin(),
@@ -133,7 +133,7 @@ module.exports = function (opts) {
             new webpack.ProgressPlugin((percentage, msg) => {
                 if (msg.length > 40)
                     msg = msg.substr(0, 40) + "..."
-                let delta = percentage - progressCur
+                const delta = percentage - progressCur
                 progressBar.tick(delta, { msg })
                 if (progressBar.complete)
                     process.stderr.write("\n")
@@ -408,12 +408,12 @@ module.exports = function (opts) {
         apply (compiler) {
             compiler.hooks.afterEmit.tapPromise("Gemstone", async () => {
                 /*  remove unwanted generated file  */
-                let manifest = path.join(cfg.path.output, "index-manifest.json")
+                const manifest = path.join(cfg.path.output, "index-manifest.json")
                 if (await fs.exists(manifest))
                     await fs.unlink(manifest)
 
                 /*  reformat index.html file  */
-                let filename = path.join(cfg.path.output, "index.html")
+                const filename = path.join(cfg.path.output, "index.html")
                 if (await fs.exists(filename)) {
                     let html = await fs.readFile(filename, "utf8")
                     html = jsBeautify.html(html, {
@@ -450,7 +450,7 @@ module.exports = function (opts) {
 
     /*  provide Webpack module loaders  */
     cfg.modules.rules.forEach((rule) => {
-        let uses = []
+        const uses = []
         Object.keys(rule.use).forEach((use) => {
             uses.push({
                 loader: require.resolve(`${use}-loader`),
@@ -464,7 +464,7 @@ module.exports = function (opts) {
     })
 
     /*  provide Webpack module provides  */
-    let provides = {
+    const provides = {
         "jQuery":      "jquery",
         "Vue":         "vue",
         "ComponentJS": "componentjs"
@@ -476,10 +476,10 @@ module.exports = function (opts) {
 
     /*  provide Webpack module replacements  */
     cfg.modules.replace.forEach((replace) => {
-        let from = new RegExp(replace.match)
-        let to   = replace.replace
+        const from = new RegExp(replace.match)
+        let to = replace.replace
         if (typeof to === "object" && to instanceof Array) {
-            let substs = to
+            const substs = to
             to = function (resource) {
                 substs.forEach((subst) => {
                     resource.request = resource.request.replace(new RegExp(subst[0]), subst[1])
@@ -499,7 +499,7 @@ module.exports = function (opts) {
         .replace(/([0-9A-F]{4})(?=.)/g, "$1.")
 
     /*  determine build time ("YYYY.MMDD.hhmm.ssSS")  */
-    let time = Moment(new Date()).format("YYYY.MMDD.hhmm.ssSS")
+    const time = Moment(new Date()).format("YYYY.MMDD.hhmm.ssSS")
 
     /*  provide environment information  */
     config.plugins.push(new webpack.DefinePlugin({
