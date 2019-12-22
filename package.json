@@ -28,7 +28,7 @@
         "babel-eslint":                   "10.0.3"
     },
     "dependencies" : {
-        "gemstone-config":                "0.9.47",
+        "gemstone-config":                "0.9.48",
         "gemstone-loader-ucid":           "0.9.26",
         "gemstone-loader-js":             "0.9.30",
         "gemstone-loader-ts":             "0.9.31",
@@ -68,5 +68,6 @@
     "scripts": {
         "prepublishOnly": "eslint --config eslint.yaml gemstone-config-webpack.js"
     },
+    "upd":  "!favicons-webpack-plugin",
     "main": "./gemstone-config-webpack.js"
 }

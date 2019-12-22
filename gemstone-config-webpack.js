@@ -64,7 +64,7 @@ module.exports = function (opts) {
             <body>
             </body>
         </html>
-    `  ).replace(/%header%\n/, cfg.header !== "" ? cfg.header : "    Gemstone Application")
+    `  ).replace(/%header%\n/, cfg.header !== "" ? cfg.header : "    Gemstone Application\n")
         .replace(/^\n+/, "")
         .replace(/([ \t]*\n)+[ \t]*$/, "\n")
 
